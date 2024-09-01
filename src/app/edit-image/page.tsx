@@ -5,6 +5,7 @@ import axios from 'axios';
 import { BiArrowBack } from 'react-icons/bi';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 function UserImgPage() {
   const [uploadedImg, setUploadedImg] = useState<string | null>(null);
@@ -94,7 +95,7 @@ function UserImgPage() {
 
           ) : (
             uploadedImg && (
-              <img
+              <Image
                 src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${uploadedImg}.jpg`}
                 alt='Selected Image'
                 className="rounded-md shadow-lg p-1 border-2 border-gray-200 h-52 w-auto"
