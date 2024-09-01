@@ -13,7 +13,7 @@ function Hero() {
 
                 <p className="mt-4 text-gray-300 text-lg">
                     Streamline your document editing process with our easy-to-use <i className="text-2xl font-bold">Pretty Good Docs</i>.
-                    Whether you're on the go or working from home, securely edit your any
+                    Whether you are on the go or working from home, securely edit your any
                     document with just a few clicks.
                     digitally and save time.
                 </p>
