@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "@/context/AuthContext";
 
 
 export const metadata: Metadata = {
@@ -18,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Toaster position="top-right"/>
-        <Header />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Toaster position="top-right" />
+          <Header />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,40 +1,27 @@
-"use client"
+"use client";
 import Link from "next/link";
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-
-interface UserInfo {
-    name: string;
-    email: string;
-}
+import { useAuth } from "@/context/AuthContext";
 
 function Header() {
-    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+    const { user, isAuthenticated } = useAuth();
     const [userInitial, setUserInitial] = useState<string>('');
-    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await axios.get('/api/userinfo');
-                console.log(response.data);
-                setUserInfo(response.data.userInfo);
-                setIsLogin(true);
-
-                // Extract the initial of the username
-                const initial = response.data.userInfo.name.charAt(0).toUpperCase();
-                setUserInitial(initial);
-            } catch (error) {
-                console.error(error);
-            }
+        if (isAuthenticated && user?.name) {
+            const initials = user.name.split(' ').map(name => name[0]).join('') || 'U';
+            setUserInitial(initials);
         }
-        fetchUser();
-    }, []);
+    }, [isAuthenticated, user?.name]);
+
+    console.log("Navbar username", user?.name);
+    console.log("Navbar Authe", isAuthenticated);
 
     return (
         <header className="bg-gray-950 top-0 left-0 sticky opacity-90">
             <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
+                    {/* left section */}
                     <div className="flex items-center justify-between space-x-4">
                         <Link className="block text-red-600" href="/">
                             <span className="sr-only">Home</span>
@@ -48,32 +35,30 @@ function Header() {
                         <h1 className="text-red-600 sm:text-2xl text-xl font-medium">Pretty Good Docs</h1>
                     </div>
 
+                    {/* right section */}
                     <div className="flex items-center gap-4">
                         <div className="sm:flex sm:gap-4">
-                            {
-                                isLogin ? (
-                                    <Link
-                                        className="rounded-full sm:px-3 py-1 px-2 text-xl font-medium text-red-600 bg-white"
-                                        href="/profile"
-                                    >
-                                        {userInitial}
-                                    </Link>
-                                ) :
-                                    (
-                                        <Link
-                                            className="rounded-md bg-red-600 px-5 py-2.5 text-sm font-medium text-white shadow"
-                                            href="/login"
-                                        >
-                                            Login
-                                        </Link>
-                                    )
-                            }
+                            {isAuthenticated ? (
+                                <Link
+                                    className="rounded-full sm:px-3 py-1 px-2 text-xl font-medium text-red-600 bg-white"
+                                    href="/profile"
+                                >
+                                    {userInitial}
+                                </Link>
+                            ) : (
+                                <Link
+                                    className="rounded-md bg-red-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                                    href="/login"
+                                >
+                                    Login
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
         </header>
-    )
+    );
 }
 
 export default Header;

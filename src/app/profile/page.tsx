@@ -1,40 +1,23 @@
 "use client"
 import axios from "axios"
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/navigation"
 import Link from "next/link";
 import { BiArrowBack } from "react-icons/bi";
 import { CiLogout } from "react-icons/ci";
 import toast from "react-hot-toast";
-
-interface userInfo {
-    name: string;
-    email: string;
-}
+import { useAuth } from "@/context/AuthContext";
 
 function ProfilePage() {
-    const [userInfo, setUserInfo] = useState<userInfo | null>(null)
+    const { user, isAuthenticated, logout } = useAuth();
     const router = useRouter();
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await axios.get('/api/userinfo');
-                console.log(response.data);
-                setUserInfo(response.data.userInfo);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        fetchUser();
-    }, [])
 
     const handleLogout = async () => {
         try {
             const resp = await axios.post('/api/logout');
             console.log(resp.data);
             toast.success(resp.data.message);
-            localStorage.clear(); // Clear local storage
+            logout();  // Update the context state
             router.push('/login');
         } catch (error: any) {
             console.log("Error in logout Client !!!");
@@ -42,6 +25,9 @@ function ProfilePage() {
         }
     }
 
+    console.log(user, "Profile page user");
+    console.log(isAuthenticated, "Profile page Authe");
+    
 
     return (
         <div className='min-h-screen min-w-full flex flex-col items-center justify-center bg-gray-800 space-y-4'>
@@ -59,18 +45,18 @@ function ProfilePage() {
                     </p>
                 </div>
                 <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    {userInfo ? (
+                    {user ? (
                         <dl className="sm:divide-y sm:divide-gray-200">
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt className="text-lg text-gray-300">Full name</dt>
                                 <dd className="mt-1 text-lg text-gray-200 sm:mt-0 sm:col-span-2 font-medium">
-                                    {userInfo.name}
+                                    {user.name}
                                 </dd>
                             </div>
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt className="text-lg text-gray-300">Email address</dt>
                                 <dd className="mt-1 text-lg text-gray-200 sm:mt-0 sm:col-span-2 font-medium">
-                                    {userInfo.email}
+                                    {user.email}
                                 </dd>
                             </div>
                         </dl>

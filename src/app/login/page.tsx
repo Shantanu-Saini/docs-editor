@@ -19,6 +19,7 @@ function LoginPage() {
             const resp = await axios.post('/api/login', user);
             console.log(resp);
             toast.success(resp.data.message);
+            window.location.reload();
             router.push('/dashboard');
         } catch (error : any) {
             console.error(error.message, "Error in Client login");
