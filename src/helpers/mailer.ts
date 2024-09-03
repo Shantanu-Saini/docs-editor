@@ -41,7 +41,10 @@ export async function sendEmail({ email, emailType, userId }: any) {
         });
 
         const mailOptions = {
-            from: "Pretty Good Docs",
+            from: {
+                name:"Pretty Good Docs",
+                address: process.env.EMAIL_HOST
+            },
             to: email,
             subject: emailType === 'reset' ? "Reset Password Link" : "Invalid email type",
             html: `<p>Click <a href="${process.env.DOMAIN_NAME}/reset-password?token=${hashedToken}">here</a> to ${emailType === "reset" ? "reset your password" : "invalid email type"}
