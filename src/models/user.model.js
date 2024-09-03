@@ -16,6 +16,8 @@ const UserSchema = new mongoose.Schema(
             required: true,
             minlength: 6
         },
+        forgetPasswordToken: String,
+        forgetPasswordTokenExpiry: Date,
     },
     { timestamps: true }
 );

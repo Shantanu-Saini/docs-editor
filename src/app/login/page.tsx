@@ -7,12 +7,12 @@ import toast from "react-hot-toast";
 
 function LoginPage() {
     const [user, setUser] = useState({
-        email : "",
-        password : ""
+        email: "",
+        password: ""
     })
     const router = useRouter()
 
-    const handleLoginSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
+    const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log("Login User", user);
         try {
@@ -21,14 +21,14 @@ function LoginPage() {
             toast.success(resp.data.message);
             window.location.reload();
             router.push('/dashboard');
-        } catch (error : any) {
+        } catch (error: any) {
             console.error(error.message, "Error in Client login");
             toast.error("Invalid Credentials");
         }
     }
 
     return (
-        <div className="min-w-full px-4 py-16 sm:px-6 lg:px-8 bg-gray-800">
+        <div className="min-w-full min-h-screen px-4 py-16 sm:px-6 lg:px-8 bg-gray-800">
             <div className="mx-auto max-w-lg">
                 <h1 className="text-center text-2xl font-semibold text-red-600 sm:text-4xl">Welcome Back</h1>
 
@@ -85,8 +85,13 @@ function LoginPage() {
                                 placeholder="Enter your password"
                                 required
                                 value={user.password}
-                                onChange={(e) => setUser({...user, password:e.target.value})}
+                                onChange={(e) => setUser({ ...user, password: e.target.value })}
                             />
+                        </div>
+                        <div>
+                            <p className="text-start text-sm text-gray-300">
+                                Forget Password? <Link className="underline" href="/forget-password"> Reset Now.</Link>
+                            </p>
                         </div>
                     </div>
 

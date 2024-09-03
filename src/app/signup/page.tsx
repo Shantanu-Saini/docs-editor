@@ -31,7 +31,7 @@ function SignupPage() {
     }
 
     return (
-        <div className="min-w-full px-4 py-16 sm:px-6 lg:px-8 bg-gray-800">
+        <div className="min-w-full min-h-screen px-4 py-16 sm:px-6 lg:px-8 bg-gray-800">
             <div className="mx-auto max-w-lg">
                 <h1 className="text-center text-2xl font-semibold text-red-600 sm:text-4xl">Get started today</h1>
 
