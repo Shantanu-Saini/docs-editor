@@ -43,7 +43,7 @@ export async function sendEmail({ email, emailType, userId }: any) {
         const mailOptions = {
             from: {
                 name:"Pretty Good Docs",
-                address: process.env.EMAIL_HOST
+                address: process.env.EMAIL_HOST!
             },
             to: email,
             subject: emailType === 'reset' ? "Reset Password Link" : "Invalid email type",
